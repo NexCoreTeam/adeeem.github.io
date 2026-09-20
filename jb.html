@@ -1,26 +1,64 @@
+```html
 <!doctype html>
 <html lang="en" manifest="cache.appcache">
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>ADEM • PS4 13.02–13.52</title>
+  <title>PS4 HOST • 13.02–13.52</title>
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: #05070c;
+      --panel: rgba(14, 18, 28, .82);
+      --border: rgba(255,255,255,.09);
+      --text: #f5f7fb;
+      --muted: #7e899c;
+      --soft: #aeb8c8;
+      --accent: #62a8ff;
+      --success: #63d49b;
+      --danger: #ff7474;
+      --warning: #e7c96d;
+    }
+
     html,
     body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
       width: 100%;
+      height: 100%;
+      margin: 0;
       overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       background:
-        radial-gradient(circle at 50% 35%, #172238 0%, #090d15 48%, #05070b 100%);
-      color: #eef3fb;
+        radial-gradient(
+          circle at 50% 15%,
+          rgba(55, 105, 170, .20),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 15% 85%,
+          rgba(50, 80, 130, .10),
+          transparent 32%
+        ),
+        linear-gradient(
+          145deg,
+          #080b12 0%,
+          #05070c 55%,
+          #030408 100%
+        );
+
+      color: var(--text);
+
       font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -29,72 +67,158 @@
         sans-serif;
     }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,.018) 1px,
+          transparent 1px
+        );
+
+      background-size: 100% 4px;
+
+      opacity: .25;
     }
 
-    /* Main card */
     #app {
-      width: min(680px, calc(100vw - 36px));
+      width: min(720px, calc(100vw - 40px));
       text-align: center;
     }
 
+    /* Logo */
+
     #logo {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 20px;
-      border-radius: 22px;
+      width: 82px;
+      height: 82px;
+
+      margin: 0 auto 22px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      background:
-        linear-gradient(145deg, #18253a, #0b111d);
+      border-radius: 24px;
 
-      border: 1px solid rgba(255,255,255,.10);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.10),
+          rgba(255,255,255,.025)
+        );
+
+      border: 1px solid var(--border);
 
       box-shadow:
-        0 20px 60px rgba(0,0,0,.45),
+        0 25px 80px rgba(0,0,0,.55),
         inset 0 1px 0 rgba(255,255,255,.08);
 
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -2px;
+      position: relative;
+    }
+
+    #logo::after {
+      content: "";
+
+      position: absolute;
+      inset: -1px;
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(98,168,255,.35),
+          transparent 45%
+        );
+
+      opacity: .55;
+
+      pointer-events: none;
     }
 
     #logo span {
-      opacity: .95;
+      position: relative;
+      z-index: 1;
+
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -3px;
     }
 
+    /* Brand */
+
     #brand {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      margin-bottom: 8px;
+      font-size: 30px;
+      font-weight: 850;
+
+      letter-spacing: .16em;
+
+      margin-left: .16em;
     }
 
     #subtitle {
-      color: #8491a7;
-      font-size: 14px;
-      letter-spacing: .08em;
-      margin-bottom: 42px;
+      margin-top: 9px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      font-weight: 600;
+
+      letter-spacing: .13em;
+
       text-transform: uppercase;
     }
 
-    /* Spinner */
+    /* Firmware */
+
+    #firmware {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      margin-top: 20px;
+      padding: 7px 13px;
+
+      border-radius: 999px;
+
+      background: rgba(98,168,255,.08);
+
+      border: 1px solid rgba(98,168,255,.18);
+
+      color: #9ec7ff;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      letter-spacing: .09em;
+    }
+
+    /* Loader */
+
+    #loaderBox {
+      margin-top: 42px;
+    }
+
     #spin {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 25px;
+      width: 58px;
+      height: 58px;
+
+      margin: 0 auto 22px;
 
       border-radius: 50%;
-      border: 4px solid rgba(255,255,255,.08);
-      border-top-color: #fff;
 
-      animation: spin .85s linear infinite;
+      border: 3px solid rgba(255,255,255,.07);
+      border-top-color: var(--accent);
+
+      box-shadow:
+        0 0 35px rgba(98,168,255,.12);
+
+      animation: spin .8s linear infinite;
     }
 
     @keyframes spin {
@@ -106,55 +230,83 @@
     #msg {
       display: none;
 
-      color: #f0f4fa;
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: .02em;
+      font-size: 18px;
+      font-weight: 700;
+
+      letter-spacing: .01em;
     }
 
     #status {
-      color: #8d9ab0;
-      font-size: 13px;
       margin-top: 9px;
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+      letter-spacing: .02em;
     }
 
-    /* Existing jb.js output */
+    /* Log */
+
     #wrap {
       display: none;
-      margin-top: 25px;
+
+      margin-top: 30px;
+
       text-align: left;
+
+      padding: 18px;
+
+      border-radius: 20px;
+
+      background: var(--panel);
+
+      border: 1px solid var(--border);
+
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.035);
+
+      backdrop-filter: blur(18px);
     }
 
     #state {
       display: none;
-      margin-bottom: 12px;
-      font-size: 20px;
+
+      margin-bottom: 14px;
+
+      font-size: 19px;
       font-weight: 750;
     }
 
     #out {
       display: none;
-      white-space: pre-wrap;
+
+      max-height: 55vh;
+
       overflow-y: auto;
 
-      max-height: 58vh;
       padding: 16px;
 
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 13px;
 
-      background: rgba(7,10,16,.78);
+      background: rgba(0,0,0,.28);
 
-      color: #aeb9ca;
+      border: 1px solid rgba(255,255,255,.055);
+
+      color: var(--soft);
 
       font:
-        12px/1.55
+        12px/1.65
         "SFMono-Regular",
         Consolas,
         monospace;
+
+      scrollbar-width: thin;
     }
 
-    /* States controlled by jb.js */
+    /* States */
+
     body.done #spin {
       display: none;
     }
@@ -164,8 +316,7 @@
     }
 
     body.done #status {
-      display: block;
-      color: #79d7a0;
+      color: var(--success);
     }
 
     body.fail #spin {
@@ -177,81 +328,100 @@
     }
 
     body.fail #status {
-      display: block;
-      color: #e78383;
+      color: var(--danger);
     }
 
-    /* ?log=1 */
+    /* Log mode */
+
     body.log {
       overflow: auto;
     }
 
     body.log #app {
-      width: min(900px, calc(100vw - 30px));
+      width: min(940px, calc(100vw - 32px));
     }
 
-    body.log #spin,
-    body.log #msg,
-    body.log #status {
+    body.log #loaderBox,
+    body.log #firmware {
       display: none;
     }
 
-    body.log #wrap {
-      display: block;
-    }
-
-    body.log #state {
-      display: block;
-    }
-
+    body.log #wrap,
+    body.log #state,
     body.log #out {
       display: block;
     }
 
+    /* Output colors */
+
     .ok,
     .safe {
-      color: #79d7a0;
+      color: var(--success);
     }
 
     .bad,
     .danger {
-      color: #e78383;
+      color: var(--danger);
     }
 
     .warn {
-      color: #dfc477;
+      color: var(--warning);
     }
 
     code {
-      color: #9db9df;
+      color: #9ec7ff;
     }
+
+    /* Footer */
 
     #footer {
       position: fixed;
-      bottom: 22px;
+
+      bottom: 20px;
       left: 0;
       right: 0;
 
       text-align: center;
 
-      color: #596579;
-      font-size: 11px;
-      letter-spacing: .12em;
+      color: #3f4858;
+
+      font-size: 10px;
+      font-weight: 600;
+
+      letter-spacing: .18em;
+
       text-transform: uppercase;
     }
 
+    /* Responsive */
+
     @media (max-width: 500px) {
+
+      #app {
+        width: calc(100vw - 28px);
+      }
+
+      #logo {
+        width: 70px;
+        height: 70px;
+
+        border-radius: 20px;
+      }
+
+      #logo span {
+        font-size: 28px;
+      }
+
       #brand {
         font-size: 23px;
       }
 
       #subtitle {
-        font-size: 11px;
+        font-size: 10px;
       }
 
-      #logo {
-        width: 66px;
-        height: 66px;
+      #firmware {
+        margin-top: 16px;
       }
     }
   </style>
@@ -266,33 +436,44 @@
     </div>
 
     <div id="brand">
-      ADEM
+      PS4 HOST
     </div>
 
     <div id="subtitle">
-      PS4 • Firmware 13.02 — 13.52
+      PlayStation 4 System Environment
     </div>
 
-    <div id="spin"></div>
-
-    <div id="msg">
-      Restart your console
+    <div id="firmware">
+      FIRMWARE 13.02 — 13.52
     </div>
 
-    <div id="status">
-      Processing...
-    </div>
+    <section id="loaderBox">
 
-    <div id="wrap">
+      <div id="spin"></div>
+
+      <div id="msg">
+        Restart your console
+      </div>
+
+      <div id="status">
+        Processing...
+      </div>
+
+    </section>
+
+    <section id="wrap">
+
       <div id="state"></div>
+
       <div id="out"></div>
-    </div>
+
+    </section>
 
   </main>
 
-  <div id="footer">
-    ADEM • PS4 HOST
-  </div>
+  <footer id="footer">
+    PS4 HOST • SYSTEM INTERFACE
+  </footer>
 
   <script type="module">
     import "./jb.js?v=10";
@@ -300,3 +481,4 @@
 
 </body>
 </html>
+```
