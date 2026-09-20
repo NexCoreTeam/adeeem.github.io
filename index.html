@@ -1,59 +1,596 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADEM • PS4 HOST</title>
-<style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
-body{font-family:Arial,Helvetica,sans-serif;color:#fff;background:#050912}
-.bg{position:fixed;inset:0;background:
-radial-gradient(circle at 18% 25%,rgba(0,140,255,.24),transparent 32%),
-radial-gradient(circle at 85% 75%,rgba(75,65,255,.18),transparent 34%),
-linear-gradient(135deg,#03060d,#08111e 55%,#050711)}
-.grid{position:fixed;inset:-50%;opacity:.12;transform:rotate(-12deg);
-background-image:linear-gradient(rgba(255,255,255,.25) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.25) 1px,transparent 1px);
-background-size:70px 70px}
-.wrap{position:relative;height:100%;display:flex;align-items:center;justify-content:center;padding:25px}
-.panel{width:min(760px,94vw);padding:38px;border:1px solid rgba(255,255,255,.12);border-radius:28px;
-background:rgba(7,13,24,.76);backdrop-filter:blur(18px);box-shadow:0 30px 100px #0008}
-.brand{font-size:12px;letter-spacing:5px;color:#75caff;font-weight:700}
-h1{font-size:clamp(44px,8vw,82px);line-height:.95;margin:12px 0 10px;letter-spacing:-4px}
-h1 b{font-weight:900}.muted{color:#8996a9}.chips{display:flex;gap:9px;flex-wrap:wrap;margin:25px 0}
-.chip{padding:8px 12px;border-radius:99px;background:#ffffff0b;border:1px solid #ffffff12;font-size:12px;color:#b9c4d3}
-.main{display:grid;grid-template-columns:1fr 170px;gap:14px}
-button{height:58px;border:0;border-radius:16px;color:white;background:linear-gradient(135deg,#087fff,#4652ff);
-font-size:16px;font-weight:800;letter-spacing:1px;cursor:pointer;box-shadow:0 12px 35px #1765ff44}
-button:active{transform:scale(.985)}button:disabled{opacity:.65}
-.side{border:1px solid #ffffff10;border-radius:16px;padding:12px;background:#ffffff05}
-.small{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#69778b}.value{margin-top:7px;font-weight:700}
-.status{margin-top:18px;padding:12px 14px;border-radius:12px;background:#0004;color:#9eabbc;font-size:12px}
-footer{position:fixed;bottom:18px;font-size:10px;color:#566274;letter-spacing:2px}
-@media(max-width:600px){.panel{padding:25px}.main{grid-template-columns:1fr}.side{display:flex;gap:20px;align-items:center}h1{letter-spacing:-2px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PS4 HOST • 13.02–13.52</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #04070d;
+      --panel: rgba(9, 15, 25, .78);
+      --border: rgba(255, 255, 255, .09);
+      --text: #f5f7fb;
+      --muted: #7f8da1;
+      --accent: #65aaff;
+      --accent2: #5364ff;
+      --success: #63d49b;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* Background */
+
+    .background {
+      position: fixed;
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle at 18% 18%,
+          rgba(72, 151, 255, .20),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 82% 78%,
+          rgba(80, 76, 255, .16),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(255,255,255,.025),
+          transparent 45%
+        ),
+        linear-gradient(
+          135deg,
+          #02050a,
+          #07101c 55%,
+          #04060c
+        );
+    }
+
+    .grid {
+      position: fixed;
+      inset: -50%;
+
+      opacity: .08;
+
+      transform: rotate(-12deg);
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,.28) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.28) 1px,
+          transparent 1px
+        );
+
+      background-size: 72px 72px;
+
+      pointer-events: none;
+    }
+
+    /* Layout */
+
+    .container {
+      position: relative;
+
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 24px;
+    }
+
+    .panel {
+      width: min(780px, 94vw);
+
+      padding: 42px;
+
+      border-radius: 28px;
+
+      background: var(--panel);
+
+      border: 1px solid var(--border);
+
+      backdrop-filter: blur(22px);
+
+      box-shadow:
+        0 35px 110px rgba(0,0,0,.58),
+        inset 0 1px 0 rgba(255,255,255,.045);
+    }
+
+    /* Header */
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+    .brand {
+      color: #82bdff;
+
+      font-size: 11px;
+      font-weight: 800;
+
+      letter-spacing: .22em;
+
+      text-transform: uppercase;
+    }
+
+    .online {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      color: #738196;
+
+      font-size: 10px;
+      font-weight: 700;
+
+      letter-spacing: .1em;
+
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--success);
+
+      box-shadow:
+        0 0 12px rgba(99,212,155,.7);
+    }
+
+    /* Main title */
+
+    h1 {
+      margin: 22px 0 10px;
+
+      font-size: clamp(52px, 9vw, 88px);
+
+      line-height: .9;
+
+      letter-spacing: -.055em;
+
+      font-weight: 900;
+    }
+
+    h1 span {
+      color: #718096;
+    }
+
+    .description {
+      max-width: 570px;
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+      line-height: 1.6;
+    }
+
+    /* Firmware chips */
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 8px;
+
+      margin-top: 25px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.035);
+
+      border: 1px solid rgba(255,255,255,.075);
+
+      color: #aab6c7;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      letter-spacing: .04em;
+    }
+
+    .chip.active {
+      color: #a9d2ff;
+
+      border-color: rgba(101,170,255,.22);
+
+      background: rgba(101,170,255,.07);
+    }
+
+    /* Main action */
+
+    .action {
+      display: grid;
+
+      grid-template-columns: 1fr 190px;
+
+      gap: 14px;
+
+      margin-top: 30px;
+    }
+
+    .launch {
+      height: 60px;
+
+      border: 0;
+
+      border-radius: 16px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #087fff,
+          #5360ff
+        );
+
+      font-size: 15px;
+      font-weight: 850;
+
+      letter-spacing: .13em;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 15px 40px rgba(23,101,255,.24);
+
+      transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        opacity .15s ease;
+    }
+
+    .launch:hover {
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 18px 48px rgba(23,101,255,.32);
+    }
+
+    .launch:active {
+      transform: scale(.985);
+    }
+
+    .launch:disabled {
+      opacity: .6;
+
+      cursor: default;
+
+      transform: none;
+    }
+
+    /* Info */
+
+    .info {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 12px;
+
+      padding: 12px;
+
+      border-radius: 16px;
+
+      background: rgba(255,255,255,.025);
+
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .info-box {
+      padding: 5px;
+    }
+
+    .label {
+      color: #657286;
+
+      font-size: 9px;
+      font-weight: 700;
+
+      letter-spacing: .13em;
+
+      text-transform: uppercase;
+    }
+
+    .value {
+      margin-top: 6px;
+
+      color: #d9e0ea;
+
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    #state {
+      color: #75d9a5;
+    }
+
+    /* Status */
+
+    .status {
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      margin-top: 16px;
+
+      padding: 13px 15px;
+
+      border-radius: 13px;
+
+      background: rgba(0,0,0,.25);
+
+      border: 1px solid rgba(255,255,255,.045);
+
+      color: #8996a8;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+    .status-dot {
+      flex: 0 0 auto;
+
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: #6b7789;
+    }
+
+    /* Footer */
+
+    footer {
+      position: fixed;
+
+      bottom: 19px;
+      left: 0;
+      right: 0;
+
+      text-align: center;
+
+      color: #3f4a5b;
+
+      font-size: 9px;
+      font-weight: 700;
+
+      letter-spacing: .2em;
+
+      text-transform: uppercase;
+    }
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+
+      .panel {
+        padding: 27px;
+
+        border-radius: 23px;
+      }
+
+      .top {
+        align-items: flex-start;
+      }
+
+      .online {
+        display: none;
+      }
+
+      h1 {
+        font-size: 54px;
+
+        letter-spacing: -.045em;
+      }
+
+      .description {
+        font-size: 12px;
+      }
+
+      .action {
+        grid-template-columns: 1fr;
+      }
+
+      .info {
+        min-height: 62px;
+      }
+
+      footer {
+        bottom: 12px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="bg"></div><div class="grid"></div>
-<div class="wrap"><section class="panel">
-<div class="brand">ADEM • PS4 HOST</div>
-<h1>PS4 <span class="muted">HOST</span></h1>
-<div class="muted">WebKit Jailbreak • Firmware 13.02 → 13.52</div>
-<div class="chips">
-<span class="chip">13.02</span><span class="chip">13.50</span><span class="chip">13.51</span><span class="chip">13.52</span>
-</div>
-<div class="main">
-<button id="jb" onclick="launch()">JAILBREAK</button>
-<div class="side"><div><div class="small">Host</div><div class="value">ADEM</div></div>
-<div><div class="small">Status</div><div class="value" id="state">READY</div></div></div>
-</div>
-<div class="status" id="log">Ready. Press JAILBREAK to launch the WebKit page.</div>
-</section></div>
-<footer>ADEM HOST • PS4 13.02 — 13.52</footer>
-<script>
-function launch(){
- const b=document.getElementById('jb'),s=document.getElementById('state'),l=document.getElementById('log');
- b.disabled=true;s.textContent='STARTING';l.textContent='Opening jb.html…';
- setTimeout(()=>location.href='jb.html?jb=1',450);
-}
-</script>
-</body></html>
+
+  <div class="background"></div>
+  <div class="grid"></div>
+
+  <main class="container">
+
+    <section class="panel">
+
+      <div class="top">
+
+        <div class="brand">
+          PS4 • HOST
+        </div>
+
+        <div class="online">
+          <span class="dot"></span>
+          Ready
+        </div>
+
+      </div>
+
+      <h1>
+        PS4 <span>HOST</span>
+      </h1>
+
+      <div class="description">
+        PlayStation 4 WebKit environment for supported
+        firmware versions.
+      </div>
+
+      <div class="chips">
+
+        <span class="chip active">13.02</span>
+        <span class="chip active">13.50</span>
+        <span class="chip active">13.51</span>
+        <span class="chip active">13.52</span>
+
+      </div>
+
+      <div class="action">
+
+        <button
+          class="launch"
+          id="jb"
+          onclick="launch()"
+        >
+          JAILBREAK
+        </button>
+
+        <div class="info">
+
+          <div class="info-box">
+
+            <div class="label">
+              Platform
+            </div>
+
+            <div class="value">
+              PS4
+            </div>
+
+          </div>
+
+          <div class="info-box">
+
+            <div class="label">
+              Status
+            </div>
+
+            <div
+              class="value"
+              id="state"
+            >
+              READY
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+        class="status"
+        id="log"
+      >
+
+        <span class="status-dot"></span>
+
+        <span>
+          Ready. Press JAILBREAK to continue.
+        </span>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    PS4 HOST • 13.02 — 13.52
+  </footer>
+
+  <script>
+
+    function launch() {
+
+      const button =
+        document.getElementById("jb");
+
+      const state =
+        document.getElementById("state");
+
+      const log =
+        document.getElementById("log");
+
+      const message =
+        log.querySelector("span:last-child");
+
+      button.disabled = true;
+
+      state.textContent = "STARTING";
+
+      message.textContent =
+        "Opening jb.html...";
+
+      setTimeout(() => {
+
+        location.href =
+          "jb.html?jb=1";
+
+      }, 450);
+
+    }
+
+  </script>
+
+</body>
+
+</html>
+```
